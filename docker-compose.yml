@@ -1,0 +1,64 @@
+data:
+    image: busybox
+    container_name: security_data
+    volumes:
+        - .:/srv
+        - ./docker/conf/nginx_vhost.conf:/etc/nginx/sites-enabled/my_app.conf
+        - ./docker/.home-developer:/home/developer
+        - /var/lib/mysql
+
+console:
+    image: meuhmeuhconcept/php-console
+    container_name: security_console
+    volumes_from:
+        - data
+    links:
+        - database
+        - mailer
+    env_file:
+        - ./docker/docker-compose.env
+    environment:
+        - DNSDOCK_IMAGE=console
+    working_dir: /srv
+
+webserver:
+    image: greg0ire/nginx
+    container_name: security_webserver
+    volumes_from:
+        - data
+    links:
+        - appserver
+    env_file:
+        - ./docker/docker-compose.env
+    environment:
+        - DNSDOCK_IMAGE=web
+
+appserver:
+    image: meuhmeuhconcept/php-fpm
+    container_name: security_appserver
+    volumes_from:
+        - data
+    links:
+        - database
+        - mailer
+    env_file:
+        - ./docker/docker-compose.env
+    environment:
+        - DNSDOCK_IMAGE=app
+
+database:
+    image: mariadb:10.0
+    container_name: security_database
+    volumes_from:
+        - data
+    env_file:
+        - ./docker/docker-compose.env
+    environment:
+        - DNSDOCK_IMAGE=db
+mailer:
+    image: greg0ire/mailcatcher
+    container_name: security_mailer
+    env_file:
+        - ./docker/docker-compose.env
+    environment:
+        - DNSDOCK_IMAGE=mailer
