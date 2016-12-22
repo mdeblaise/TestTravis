@@ -13,5 +13,5 @@ before_script:
     - docker ps
 
 script:
-    - docker exec --user=gitlab-runner security_console make test
-    - docker exec --user=gitlab-runner security_console make cs-check
+    - docker exec --user=travis security_console make test
+    - docker exec --user=travis security_console make cs-check

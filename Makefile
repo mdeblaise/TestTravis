@@ -13,7 +13,7 @@ stop: ## Stop containers
 	docker-compose stop
 
 console: ## Connect to console container
-	docker exec -it mmc-card_console /bin/login -p -f $(shell whoami)
+	docker exec -it security_console /bin/login -p -f $(shell whoami)
 
 vendor/autoload.php: ## Install composer dependencies
 	composer install
