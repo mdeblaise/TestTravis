@@ -14,9 +14,7 @@ script:
     - docker exec --user=travis security_console make cs-check
 
 after_success:
-    - docker-compose stop
-    - docker-compose rm --force
+    - make remove
 
 after_failure:
-    - docker-compose stop
-    - docker-compose rm --force
+    - make remove
