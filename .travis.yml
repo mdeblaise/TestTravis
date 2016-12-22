@@ -7,9 +7,11 @@ install:
     - sudo chmod +x /usr/local/bin/docker-compose
     - docker-compose --version
     - make docker/docker-compose.env
-    - docker-compose --project-name security up -d
+    - docker-compose --project-name security up -d console
 
 before_script:
+    - docker ps
 
 script:
-    - docker ps
+    - docker exec --user=gitlab-runner security_console make test
+    - docker exec --user=gitlab-runner security_console make cs-check
