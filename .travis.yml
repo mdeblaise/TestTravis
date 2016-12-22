@@ -8,4 +8,6 @@ install:
 
 script:
     - docker-compose --version
+    - ls -la /home/travis/build/mdeblaise/TestTravis/docker/
+    - docker-compose ps
     - docker-compose up -d
