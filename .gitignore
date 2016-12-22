@@ -1,11 +1,33 @@
+/app/config/parameters.yml
+/build/
+/phpunit.xml
+/var/*
+!/var/cache
+/var/cache/*
+!var/cache/.gitkeep
+!/var/logs
+/var/logs/*
+!var/logs/.gitkeep
+!/var/sessions
+/var/sessions/*
+!var/sessions/.gitkeep
+!var/SymfonyRequirements.php
+/web/bundles/
+/web/dist/
+/web/uploads/
+/web/media/
+
+# Managed by Composer
+/app/bootstrap.php.cache
+/var/bootstrap.php.cache
+/bin/*
+!bin/console
+!bin/symfony_requirements
+/vendor/
+
 # Docker
 /docker/docker-compose.env
 /docker/.home-developer
 
-# Composer
-/vendor
-
 # PHP CS
 .php_cs.cache
-
-/var
