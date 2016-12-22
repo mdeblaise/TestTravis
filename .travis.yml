@@ -7,13 +7,9 @@ install:
     - sudo chmod +x /usr/local/bin/docker-compose
     - docker-compose --version
     - make docker/docker-compose.env
-    - ln --symbolic --verbose ~/docker-home docker/.home-developer
-    - docker-compose --project-name security up -d console
-    - sleep 1 # wait for the entrypoint to complete
+    - docker-compose --project-name security up -d
 
 before_script:
 
 script:
-    - ls -la /home/travis/build/mdeblaise/TestTravis/docker/
-    - docker-compose ps
-    - docker-compose up -d
+    - docker ps
