@@ -9,9 +9,14 @@ install:
     - make docker/docker-compose.env
     - docker-compose --project-name security up -d console
 
-before_script:
-    - docker ps
-
 script:
     - docker exec --user=travis security_console make test
     - docker exec --user=travis security_console make cs-check
+
+after_success:
+    - docker-compose stop
+    - docker-compose rm --force
+
+after_failure:
+    - docker-compose stop
+    - docker-compose rm --force
