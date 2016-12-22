@@ -1,29 +1,19 @@
+language: bash
+
+services: docker
+
+install:
+    - sudo curl -L "https://github.com/docker/compose/releases/download/1.9.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+    - sudo chmod +x /usr/local/bin/docker-compose
+    - docker-compose --version
+    - make docker/docker-compose.env
+    - ln --symbolic --verbose ~/docker-home docker/.home-developer
+    - docker-compose --project-name security up -d console
+    - sleep 1 # wait for the entrypoint to complete
+
 before_script:
-    - docker info
 
-stages:
-    - prepare
-    - test
-    - cleanup
-
-start_compose:
-    stage: prepare
-    script:
-        - make docker/docker-compose.env
-        - ln --symbolic --verbose ~/docker-home docker/.home-developer
-        - docker-compose --project-name mmc-sonata-admin up -d console
-        - sleep 1 # wait for the entrypoint to complete
-
-run_tests:
-    stage: test
-    script:
-        - docker exec --user=gitlab-runner mmc-sonata-admin_console make test
-        - docker exec --user=gitlab-runner mmc-sonata-admin_console make cs-check
-
-stop_compose:
-    stage: cleanup
-    script:
-        - make docker/docker-compose.env
-        - docker-compose stop
-        - docker-compose rm --force
-    when: always
+script:
+    - ls -la /home/travis/build/mdeblaise/TestTravis/docker/
+    - docker-compose ps
+    - docker-compose up -d
